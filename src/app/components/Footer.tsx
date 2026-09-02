@@ -1,11 +1,11 @@
 import { Github, Linkedin, Mail, Instagram, Twitter, ArrowUp } from "lucide-react";
 
 const socialLinks = [
-  { icon: <Github size={18} />, href: "https://github.com", label: "GitHub" },
-  { icon: <Linkedin size={18} />, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: <Mail size={18} />, href: "mailto:yourname@email.com", label: "Email" },
+  { icon: <Github size={18} />, href: "https://github.com/lucasnbll", label: "GitHub" },
+  { icon: <Linkedin size={18} />, href: "https://www.linkedin.com", label: "LinkedIn" },
+  { icon: <Mail size={18} />, href: "mailto:lucasnbl111@gmail.com", label: "Email" },
   { icon: <Instagram size={18} />, href: "https://www.instagram.com/lucasnbll?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==", label: "Instagram" },
-  { icon: <Twitter size={18} />, href: "https://twitter.com", label: "Twitter/X" },
+  { icon: <Twitter size={18} />, href: "https://x.com", label: "Twitter/X" },
 ];
 
 const navLinks = [

@@ -181,9 +181,9 @@ export function HeroSection() {
             </span>
             <div className="flex gap-3">
               {[
-                { icon: <Github size={20} />, href: "https://github.com", label: "GitHub" },
-                { icon: <Linkedin size={20} />, href: "https://linkedin.com", label: "LinkedIn" },
-                { icon: <Mail size={20} />, href: "mailto:you@email.com", label: "Email" },
+                { icon: <Github size={20} />, href: "https://github.com/lucasnbll", label: "GitHub" },
+                { icon: <Linkedin size={20} />, href: "https://www.linkedin.com", label: "LinkedIn" },
+                { icon: <Mail size={20} />, href: "mailto:lucasnbl111@gmail.com", label: "Email" },
               ].map((s) => (
                 <a
                   key={s.label}

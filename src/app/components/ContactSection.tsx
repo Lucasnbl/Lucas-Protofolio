@@ -11,10 +11,24 @@ export function ContactSection() {
 
   const email = "lucasnbl111@gmail.com";
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        const temp = document.createElement("textarea");
+        temp.value = email;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error(error);
+      alert("Salinan email gagal dibuat. Silakan salin manual: lucasnbl111@gmail.com");
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +54,24 @@ export function ContactSection() {
       return;
     }
 
+    const isStaticGithubPages = /github\.io/i.test(window.location.hostname);
+
     setIsSending(true);
 
     try {
+      if (isStaticGithubPages) {
+        const subject = encodeURIComponent(form.subject || `Portfolio inquiry from ${form.name}`);
+        const body = encodeURIComponent(
+          `Nama: ${form.name}\nEmail: ${form.email}\n\nPesan:\n${form.message}`
+        );
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        setSent(true);
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setFiles([]);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        return;
+      }
+
       const formData = new FormData();
       formData.append("name", form.name);
       formData.append("email", form.email);
