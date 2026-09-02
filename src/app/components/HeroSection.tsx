@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import type { ThemeMode } from "../App";
 
 const ROLES = [
   "Information System",
@@ -8,7 +9,8 @@ const ROLES = [
   "Student Representative Council of Faculty of Technology and Design",
 ];
 
-export function HeroSection() {
+export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
+  const isDark = theme === "dark";
   const [roleIdx, setRoleIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -47,7 +49,8 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#0A0F1E]"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: isDark ? "#0A0F1E" : "#f5f7ff" }}
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -91,8 +94,11 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-[#1E3A8A]/20 border border-[#1E3A8A]/40 mb-6 sm:mb-8">
             <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
             <span
-              className="text-[#93B4FF] text-sm sm:text-base"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              className="text-sm sm:text-base"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                color: isDark ? "#93B4FF" : "#1e3a8a",
+              }}
             >
               Open for Internship & Collaboration
             </span>
@@ -100,13 +106,14 @@ export function HeroSection() {
 
           {/* Main Heading */}
           <h1
-            className="text-white mb-4 sm:mb-6"
+            className="mb-4 sm:mb-6"
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 700,
               fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
+              color: isDark ? "#ffffff" : "#0f172a",
             }}
           >
             Hi, I'm{" "}
@@ -114,7 +121,7 @@ export function HeroSection() {
               Lucas Vincent Kurniawan
             </span>
             <br />
-            <span className="text-white">Obedius Nobel</span>
+            <span style={{ color: isDark ? "#ffffff" : "#0f172a" }}>Obedius Nobel</span>
             <span className="ml-3 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
               ✨ Test Update
             </span>
@@ -127,7 +134,7 @@ export function HeroSection() {
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 600,
               fontSize: "clamp(1.2rem, 3vw, 1.8rem)",
-              color: "rgba(255,255,255,0.8)",
+              color: isDark ? "rgba(255,255,255,0.8)" : "rgba(15, 23, 42, 0.75)",
             }}
           >
             <span>{displayed}</span>
@@ -136,11 +143,12 @@ export function HeroSection() {
 
           {/* Description */}
           <p
-            className="text-white/60 mb-8 sm:mb-10 max-w-xl"
+            className="mb-8 sm:mb-10 max-w-xl"
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "clamp(1rem, 1.8vw, 1.1rem)",
               lineHeight: 1.8,
+              color: isDark ? "rgba(255,255,255,0.6)" : "rgba(15, 23, 42, 0.7)",
             }}
           >
             Mahasiswa Sistem Informasi yang passionate dalam membangun solusi

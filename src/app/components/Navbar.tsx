@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, SunMedium, MoonStar } from "lucide-react";
+import type { ThemeMode } from "../App";
 
 const navLinks = [
   { label: "Home", href: "#hero" },
@@ -9,7 +10,13 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-export function Navbar() {
+export function Navbar({
+  theme,
+  onToggleTheme,
+}: {
+  theme: ThemeMode;
+  onToggleTheme: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -93,22 +100,43 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* CTA Button */}
-        <button
-          onClick={() => handleNav("#contact")}
-          className="hidden md:flex items-center gap-2 px-5 py-2 rounded-lg bg-[#F97316] text-white text-sm hover:bg-[#ea6c0a] transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]"
-          style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
-        >
-          Hire Me
-        </button>
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label="Toggle theme"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition hover:border-[#1E3A8A]/60 hover:text-white"
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? <SunMedium size={18} /> : <MoonStar size={18} />}
+          </button>
+
+          <button
+            onClick={() => handleNav("#contact")}
+            className="flex items-center gap-2 px-5 py-2 rounded-lg bg-[#F97316] text-white text-sm hover:bg-[#ea6c0a] transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]"
+            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+          >
+            Hire Me
+          </button>
+        </div>
 
         {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden text-white/70 hover:text-white transition-colors cursor-pointer"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label="Toggle theme"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80"
+          >
+            {theme === "dark" ? <SunMedium size={16} /> : <MoonStar size={16} />}
+          </button>
+          <button
+            className="text-white/70 hover:text-white transition-colors cursor-pointer"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}

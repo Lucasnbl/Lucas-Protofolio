@@ -134,9 +134,14 @@ const bentoCards = [
   },
 ];
 
-export function AboutSection() {
+export function AboutSection({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const isDark = theme === "dark";
   return (
-    <section id="about" className="py-16 sm:py-24 bg-[#080D1A] relative overflow-hidden">
+    <section
+      id="about"
+      className="py-16 sm:py-24 relative overflow-hidden"
+      style={{ background: isDark ? "#080D1A" : "#edf4ff" }}
+    >
       {/* BG accent */}
       <div className="absolute top-0 right-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#1E3A8A]/5 blur-3xl" />
 

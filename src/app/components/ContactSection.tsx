@@ -1,7 +1,8 @@
 import { Mail, MapPin, Send, Copy, Check, Upload, X } from "lucide-react";
 import { useState, useRef } from "react";
 
-export function ContactSection() {
+export function ContactSection({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const isDark = theme === "dark";
   const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [files, setFiles] = useState<File[]>([]);
@@ -105,7 +106,11 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-24 bg-[#0A0F1E] relative overflow-hidden">
+    <section
+      id="contact"
+      className="py-16 sm:py-24 relative overflow-hidden"
+      style={{ background: isDark ? "#0A0F1E" : "#f5f7ff" }}
+    >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 sm:w-[600px] h-80 sm:h-96 rounded-full bg-[#1E3A8A]/8 blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">

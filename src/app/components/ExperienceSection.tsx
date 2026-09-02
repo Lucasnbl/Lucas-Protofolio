@@ -90,9 +90,14 @@ const typeConfig: Record<ExperienceType, { icon: React.JSX.Element; label: strin
   org: { icon: <Building2 size={14} />, label: "Organization" },
 };
 
-export function ExperienceSection() {
+export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const isDark = theme === "dark";
   return (
-    <section id="experience" className="py-16 sm:py-24 bg-[#080D1A] relative overflow-hidden">
+    <section
+      id="experience"
+      className="py-16 sm:py-24 relative overflow-hidden"
+      style={{ background: isDark ? "#080D1A" : "#edf4ff" }}
+    >
       <div className="absolute top-1/3 right-0 w-80 h-80 rounded-full bg-[#1E3A8A]/5 blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">

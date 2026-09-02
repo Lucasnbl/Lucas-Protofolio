@@ -202,11 +202,16 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export function ProjectsSection() {
+export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const isDark = theme === "dark";
   const [activeTab, setActiveTab] = useState<Tab>("software");
 
   return (
-    <section id="projects" className="py-16 sm:py-24 bg-[#0A0F1E] relative overflow-hidden">
+    <section
+      id="projects"
+      className="py-16 sm:py-24 relative overflow-hidden"
+      style={{ background: isDark ? "#0A0F1E" : "#f5f7ff" }}
+    >
       <div className="absolute bottom-0 left-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#F97316]/5 blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">

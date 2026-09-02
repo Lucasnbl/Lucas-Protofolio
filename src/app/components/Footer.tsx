@@ -16,7 +16,8 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-export function Footer() {
+export function Footer({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const isDark = theme === "dark";
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -27,7 +28,10 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#060A14] border-t border-white/5 relative overflow-hidden">
+    <footer
+      className="border-t relative overflow-hidden"
+      style={{ background: isDark ? "#060A14" : "#eef4ff", borderColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(15,23,42,0.08)" }}
+    >
       {/* Gradient accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-[#1E3A8A]/60 to-transparent" />
 
