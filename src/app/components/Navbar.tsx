@@ -17,6 +17,7 @@ export function Navbar({
   theme: ThemeMode;
   onToggleTheme: () => void;
 }) {
+  const isDark = theme === "dark";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -49,7 +50,9 @@ export function Navbar({
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
   scrolled
-    ? "py-3 bg-black/40 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20"
+    ? isDark
+      ? "py-3 bg-black/40 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20"
+      : "py-3 bg-white/70 backdrop-blur-md border-b border-slate-200 shadow-lg shadow-slate-200/60"
     : "py-3 sm:py-5 bg-transparent"
 }`}
     >
@@ -65,7 +68,7 @@ export function Navbar({
             </span>
           </div>
           <span
-            className="text-white/90 group-hover:text-white transition-colors hidden sm:inline"
+            className={`group-hover:opacity-100 transition-colors hidden sm:inline ${isDark ? "text-white/90 group-hover:text-white" : "text-slate-800 group-hover:text-slate-900"}`}
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, fontSize: "clamp(0.85rem, 1.5vw, 0.95rem)" }}
           >
             Portfolio<span className="text-[#F97316]">.</span>
@@ -80,10 +83,10 @@ export function Navbar({
               <li key={link.label}>
                 <button
                   onClick={() => handleNav(link.href)}
-                  className={`relative px-3 lg:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
+                  className={`relative px-3 lg:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 cursor-pointer will-change-transform ${
                     isActive
-                      ? "text-white"
-                      : "text-white/50 hover:text-white/80"
+                      ? isDark ? "text-white" : "text-slate-900"
+                      : isDark ? "text-white/50 hover:text-white/80" : "text-slate-600 hover:text-slate-900"
                   }`}
                   style={{ fontFamily: "'Inter', sans-serif", fontWeight: isActive ? 500 : 400 }}
                 >
@@ -105,7 +108,7 @@ export function Navbar({
             type="button"
             onClick={onToggleTheme}
             aria-label="Toggle theme"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition hover:border-[#1E3A8A]/60 hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 active:scale-95 hover:border-[#1E3A8A]/60 hover:text-white"
             title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
             {theme === "dark" ? <SunMedium size={18} /> : <MoonStar size={18} />}
@@ -113,7 +116,7 @@ export function Navbar({
 
           <button
             onClick={() => handleNav("#contact")}
-            className="flex items-center gap-2 px-5 py-2 rounded-lg bg-[#F97316] text-white text-sm hover:bg-[#ea6c0a] transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]"
+            className="flex items-center gap-2 px-5 py-2 rounded-lg bg-[#F97316] text-white text-sm hover:bg-[#ea6c0a] transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]"
             style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
           >
             Hire Me
@@ -126,7 +129,7 @@ export function Navbar({
             type="button"
             onClick={onToggleTheme}
             aria-label="Toggle theme"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-all duration-300 active:scale-95"
           >
             {theme === "dark" ? <SunMedium size={16} /> : <MoonStar size={16} />}
           </button>
@@ -157,7 +160,7 @@ export function Navbar({
             <li className="mt-3 pt-3 border-t border-white/5">
               <button
                 onClick={() => handleNav("#contact")}
-                className="w-full px-4 py-3 rounded-lg bg-[#F97316] text-white text-sm cursor-pointer hover:bg-[#ea6c0a] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]"
+                className="w-full px-4 py-3 rounded-lg bg-[#F97316] text-white text-sm cursor-pointer transition-all duration-300 hover:bg-[#ea6c0a] hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]"
                 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
               >
                 Hire Me

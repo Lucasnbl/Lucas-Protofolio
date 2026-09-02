@@ -162,16 +162,16 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
               onClick={() =>
                 document
                   .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" })
               }
-              className="flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl bg-[#1E3A8A] text-white hover:bg-[#2547B0] transition-all hover:shadow-lg hover:shadow-[#1E3A8A]/30 cursor-pointer text-base sm:text-lg"
+              className="flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl bg-[#1E3A8A] text-white hover:bg-[#2547B0] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-[#1E3A8A]/30 cursor-pointer text-base sm:text-lg"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               View Projects
               <ArrowDown size={18} className="rotate-[-90deg]" />
             </button>
             <button
-              className="flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl border border-white/10 text-white/70 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all cursor-pointer text-base sm:text-lg"
+              className="flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl border border-[#1E3A8A]/20 bg-white/50 text-slate-700 hover:text-slate-900 hover:border-[#1E3A8A]/40 hover:bg-white/80 transition-all duration-300 cursor-pointer text-base sm:text-lg active:scale-[0.98] hover:-translate-y-1"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               <Download size={18} />
@@ -182,8 +182,11 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
           {/* Social Links */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
             <span
-              className="text-white/40 text-sm"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              className="text-sm"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15, 23, 42, 0.6)",
+              }}
             >
               Find me on
             </span>
@@ -198,7 +201,11 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-[#1E3A8A]/60 hover:bg-[#1E3A8A]/20 transition-all"
+                  className={`w-12 h-12 rounded-lg border flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 active:scale-95 ${
+                    isDark
+                      ? "border-white/10 text-white/40 hover:text-white hover:border-[#1E3A8A]/60 hover:bg-[#1E3A8A]/20"
+                      : "border-slate-300 text-slate-600 hover:text-slate-900 hover:border-[#1E3A8A]/40 hover:bg-[#1E3A8A]/10"
+                  }`}
                   aria-label={s.label}
                 >
                   {s.icon}
