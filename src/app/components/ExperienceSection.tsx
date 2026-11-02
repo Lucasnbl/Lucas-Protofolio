@@ -135,7 +135,7 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
           {/* Vertical line */}
           <div className={`absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#1E3A8A]/60 ${isDark ? "via-white/10" : "via-slate-200"} to-transparent`} />
 
-          <div className="space-y-4 sm:space-y-5">
+          <div className="space-y-2 sm:space-y-3">
             {experiences.map((exp, index) => {
               const isLeft = index % 2 === 0;
               const config = typeConfig[exp.type];
