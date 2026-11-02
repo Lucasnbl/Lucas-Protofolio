@@ -36,7 +36,7 @@ const BrandLogo = ({ brand }: { brand: "github" | "linkedin" | "instagram" | "x"
 
 const socialLinks = [
   { icon: <BrandLogo brand="github" />, href: "https://github.com/lucasnbll", label: "GitHub", tile: "bg-gradient-to-br from-[#24292F] to-[#49515A] hover:shadow-[#24292F]/35" },
-  { icon: <BrandLogo brand="linkedin" />, href: "https://www.linkedin.com", label: "LinkedIn", tile: "bg-gradient-to-br from-[#0A66C2] to-[#2E9BFF] hover:shadow-[#0A66C2]/40" },
+  { icon: <BrandLogo brand="linkedin" />, href: "https://www.linkedin.com/in/lucas-vincent-nbl-81313a32b", label: "LinkedIn", tile: "bg-gradient-to-br from-[#0A66C2] to-[#2E9BFF] hover:shadow-[#0A66C2]/40" },
   { icon: <Mail size={18} strokeWidth={2.5} />, href: "mailto:lucasnbl111@gmail.com", label: "Email", tile: "bg-gradient-to-br from-[#EA4335] to-[#F97316] hover:shadow-[#EA4335]/40" },
   { icon: <BrandLogo brand="instagram" />, href: "https://www.instagram.com/lucasnbll?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==", label: "Instagram", tile: "bg-gradient-to-br from-[#FEDA75] via-[#D62976] to-[#4F5BD5] hover:shadow-[#D62976]/40" },
   { icon: <BrandLogo brand="x" />, href: "https://x.com", label: "X", tile: "bg-gradient-to-br from-[#111827] to-[#374151] hover:shadow-[#111827]/35" },
