@@ -1,46 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowDown, Download } from "lucide-react";
 import type { ThemeMode } from "../App";
 
 const ROLES = [
   "Information System",
   "Data Analyst",
   "Student Legislative Council",
-  "Student Representative Council of Faculty of Technology and Design",
+  "Student Representative Council",
 ];
 
 export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
   const isDark = theme === "dark";
   const [roleIdx, setRoleIdx] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); 
-
   useEffect(() => {
-    const current = ROLES[roleIdx];
-    const speed = isDeleting ? 40 : 70;
-
-    timeoutRef.current = setTimeout(() => {
-      if (!isDeleting) {
-        setDisplayed(current.substring(0, displayed.length + 1));
-        if (displayed.length + 1 === current.length) {
-          setTimeout(() => setIsDeleting(true), 1800);
-        }
-      } else {
-        setDisplayed(current.substring(0, displayed.length - 1));
-        if (displayed.length - 1 === 0) {
-          setIsDeleting(false);
-          setRoleIdx((prev) => (prev + 1) % ROLES.length);
-        }
-      }
-    }, speed);
-
-    return () => {
-  if (timeoutRef.current) {
-    clearTimeout(timeoutRef.current);
-  }
-};
-  }, [displayed, isDeleting, roleIdx]);
+    const interval = window.setInterval(() => {
+      setRoleIdx((current) => (current + 1) % ROLES.length);
+    }, 4200);
+    return () => window.clearInterval(interval);
+  }, []);
 
   const scrollToAbout = () => {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -50,18 +27,18 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: isDark ? "#0A0F1E" : "#f5f7ff" }}
+      style={{ background: isDark ? "#0A0F1E" : "#F9FAFC" }}
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Gradient Orbs */}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-[#1E3A8A]/20 blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full bg-[#F97316]/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#1E3A8A]/5 blur-3xl" />
+        <div className={`absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-3xl ${isDark ? "bg-[#1E3A8A]/20" : "hidden"}`} />
+        <div className={`absolute bottom-1/4 -right-32 w-80 h-80 rounded-full blur-3xl ${isDark ? "bg-[#F97316]/10" : "hidden"}`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl ${isDark ? "bg-[#1E3A8A]/5" : "hidden"}`} />
 
         {/* Grid Pattern */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className={`absolute inset-0 ${isDark ? "opacity-[0.03]" : "hidden"}`}
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
@@ -72,7 +49,7 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full"
+            className={`absolute rounded-full ${isDark ? "" : "hidden"}`}
             style={{
               width: `${4 + (i % 3) * 3}px`,
               height: `${4 + (i % 3) * 3}px`,
@@ -91,7 +68,7 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
         {/* Left: Text */}
         <div>
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-[#1E3A8A]/20 border border-[#1E3A8A]/40 mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-[#1E3A8A]/20 border border-[#1E3A8A]/40 mb-6 sm:mb-8 animate-float-slow">
             <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
             <span
               className="text-sm sm:text-base"
@@ -106,7 +83,7 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
 
           {/* Main Heading */}
           <h1
-            className="mb-4 sm:mb-6"
+            className="mb-4 sm:mb-6 opacity-0 animate-fade-in-up"
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 700,
@@ -114,10 +91,11 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
               color: isDark ? "#ffffff" : "#0f172a",
+              animationDelay: "80ms",
             }}
           >
             Hi, I'm{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4B7FE8] to-[#F97316]">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent inline-block cursor-default transition-all duration-300 hover:-translate-y-1 hover:scale-[1.04] hover:drop-shadow-[0_8px_12px_rgba(37,99,235,0.28)]">
               Lucas Vincent Kurniawan
             </span>
             <br />
@@ -129,26 +107,35 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
 
           {/* Typewriter Role */}
           <div
-            className="flex items-center gap-2 mb-6 sm:mb-8"
+            className="flex items-center gap-2 mb-6 sm:mb-8 opacity-0 animate-fade-in-up"
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 600,
               fontSize: "clamp(1.2rem, 3vw, 1.8rem)",
               color: isDark ? "rgba(255,255,255,0.8)" : "rgba(15, 23, 42, 0.75)",
+              animationDelay: "180ms",
             }}
           >
-            <span>{displayed}</span>
-            <span className="w-0.5 h-8 bg-[#F97316] animate-pulse" />
+            <span className="inline-flex min-w-0 max-w-full items-center overflow-hidden">
+              <span
+                key={roleIdx}
+                className="typewriter-text inline-block overflow-hidden whitespace-nowrap"
+                style={{ "--typewriter-steps": ROLES[roleIdx].length } as React.CSSProperties}
+              >
+                {ROLES[roleIdx]}
+              </span>
+              <span aria-hidden="true" className="typewriter-caret ml-0.5 h-[1.25em] w-0.5 flex-shrink-0 bg-[#F97316]" />
+            </span>
           </div>
 
           {/* Description */}
           <p
-            className="mb-8 sm:mb-10 max-w-xl"
+            className={`mb-8 sm:mb-10 max-w-xl opacity-0 animate-fade-in-up ${isDark ? "text-white/60" : "text-slate-600"}`}
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "clamp(1rem, 1.8vw, 1.1rem)",
               lineHeight: 1.8,
-              color: isDark ? "rgba(255,255,255,0.6)" : "rgba(15, 23, 42, 0.7)",
+              animationDelay: "280ms",
             }}
           >
             Mahasiswa Sistem Informasi yang passionate dalam membangun solusi
@@ -157,21 +144,23 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-10 sm:mb-12">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-10 sm:mb-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
             <button
               onClick={() =>
                 document
                   .getElementById("projects")
                   ?.scrollIntoView({ behavior: "smooth", block: "start" })
               }
-              className="flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl bg-[#1E3A8A] text-white hover:bg-[#2547B0] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-[#1E3A8A]/30 cursor-pointer text-base sm:text-lg"
+              className="shine-button group relative overflow-hidden flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl bg-[#1E3A8A] text-white hover:bg-[#2547B0] transition-transform transition-shadow transition-colors duration-300 hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] cursor-pointer text-base sm:text-lg"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
-              View Projects
-              <ArrowDown size={18} className="rotate-[-90deg]" />
+              <span className="relative z-10 inline-flex items-center gap-2">
+                View Projects
+                <ArrowDown size={18} className="rotate-[-90deg]" />
+              </span>
             </button>
             <button
-              className="flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl border border-[#1E3A8A]/20 bg-white/50 text-slate-700 hover:text-slate-900 hover:border-[#1E3A8A]/40 hover:bg-white/80 transition-all duration-300 cursor-pointer text-base sm:text-lg active:scale-[0.98] hover:-translate-y-1"
+              className={`flex items-center justify-center sm:justify-start gap-2 px-8 py-4 rounded-xl border border-[#1E3A8A]/20 transition-all duration-300 cursor-pointer text-base sm:text-lg active:scale-[0.98] hover:-translate-y-1 ${isDark ? "bg-white/5 text-white/80 hover:text-white hover:bg-white/10" : "bg-white/80 text-slate-700 hover:text-slate-950 hover:border-[#1E3A8A]/40 hover:bg-white"}`}
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               <Download size={18} />
@@ -179,47 +168,18 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
             </button>
           </div>
 
-          {/* Social Links */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
-            <span
-              className="text-sm"
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15, 23, 42, 0.6)",
-              }}
-            >
-              Find me on
-            </span>
-            <div className="flex gap-3">
-              {[
-                { icon: <Github size={20} />, href: "https://github.com/lucasnbll", label: "GitHub" },
-                { icon: <Linkedin size={20} />, href: "https://www.linkedin.com", label: "LinkedIn" },
-                { icon: <Mail size={20} />, href: "mailto:lucasnbl111@gmail.com", label: "Email" },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-12 h-12 rounded-lg border flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 active:scale-95 ${
-                    isDark
-                      ? "border-white/10 text-white/40 hover:text-white hover:border-[#1E3A8A]/60 hover:bg-[#1E3A8A]/20"
-                      : "border-slate-300 text-slate-600 hover:text-slate-900 hover:border-[#1E3A8A]/40 hover:bg-[#1E3A8A]/10"
-                  }`}
-                  aria-label={s.label}
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Right: Glassmorphism Card / Visual */}
         <div className="flex justify-center lg:justify-end mt-10 lg:mt-0">
           <div className="relative w-full max-w-sm sm:max-w-md">
             {/* Main Glass Card */}
-            <div className="relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 sm:p-8 overflow-hidden">
+            <div
+              className={isDark
+                ? "relative rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 overflow-hidden backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.18)] transition-transform duration-500 hover:rotate-1 hover:scale-[1.02] hover:-translate-y-2 opacity-0 animate-fade-in-up"
+                : "relative bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 overflow-hidden shadow-[0_8px_30px_rgba(15,23,42,0.08)] transition-transform duration-500 hover:rotate-1 hover:scale-[1.02] hover:-translate-y-2 opacity-0 animate-fade-in-up"}
+              style={{ animationDelay: "220ms" }}
+            >
               {/* Decorative top gradient */}
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1E3A8A]/60 to-transparent" />
 
@@ -235,21 +195,28 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
                 </div>
                 <div className="flex-1">
                   <p
-                    className="text-white text-lg"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700 }}
+                    className="text-lg"
+                    style={{
+                      fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      fontWeight: 700,
+                      color: isDark ? "#ffffff" : "#0f172a",
+                    }}
                   >
                     Lucas Vincent Kurniawan
                   </p>
                   <p
-                    className="text-white/40 text-sm"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    className="text-sm"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15, 23, 42, 0.65)",
+                    }}
                   >
                     Information Systems Student
                   </p>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex-shrink-0">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 text-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <span className={`${isDark ? "text-emerald-400" : "text-emerald-700"} text-xs`} style={{ fontFamily: "'Inter', sans-serif" }}>
                     Available
                   </span>
                 </div>
@@ -264,20 +231,29 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-xl bg-white/5 border border-white/8 p-3 sm:p-4 text-center"
+                    className="rounded-xl p-3 sm:p-4 text-center shadow-[0_3px_12px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.12)]"
+                    style={{
+                      background: isDark ? "rgba(255,255,255,0.05)" : "#f8fafc",
+                      border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(148,163,184,0.18)",
+                    }}
                   >
                     <p
-                      className="text-white text-lg sm:text-xl"
+                      className="text-lg sm:text-xl"
                       style={{
                         fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontWeight: 700,
+                        color: isDark ? "#ffffff" : "#0f172a",
                       }}
                     >
                       {stat.value}
                     </p>
                     <p
-                      className="text-white/40 text-xs sm:text-sm"
-                      style={{ fontFamily: "'Inter', sans-serif", marginTop: "4px" }}
+                      className="text-xs sm:text-sm"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        marginTop: "4px",
+                        color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15, 23, 42, 0.6)",
+                      }}
                     >
                       {stat.label}
                     </p>
@@ -295,25 +271,32 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
                   <div key={item.skill}>
                     <div className="flex justify-between mb-2">
                       <span
-                        className="text-white/70 text-sm"
-                        style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                        className="text-sm"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontWeight: 500,
+                          color: isDark ? "rgba(255,255,255,0.7)" : "#334155",
+                        }}
                       >
                         {item.skill}
                       </span>
                       <span
-                        className="text-white/40 text-sm"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        className="text-sm"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15,23,42,0.7)",
+                        }}
                       >
                         {item.pct}%
                       </span>
                     </div>
-                    <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                    <div className="h-2 rounded-full overflow-hidden" style={{ background: isDark ? "rgba(255,255,255,0.05)" : "#e2e8f0" }}>
                       <div
-                        className="h-full rounded-full"
+                        className="skill-progress-fill h-full rounded-full"
                         style={{
-                          width: `${item.pct}%`,
+                          "--progress-target": `${item.pct}%`,
                           background: `linear-gradient(90deg, ${item.color}80, ${item.color})`,
-                        }}
+                        } as React.CSSProperties}
                       />
                     </div>
                   </div>
@@ -325,7 +308,7 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
             </div>
 
             {/* Floating Badge */}
-            <div className="absolute -top-3 -right-3 px-4 py-2 rounded-lg bg-[#F97316] text-white text-sm shadow-lg shadow-[#F97316]/30"
+            <div className="absolute -top-3 -right-3 px-4 py-2 rounded-lg bg-[#F97316] text-white text-sm shadow-lg shadow-[#F97316]/30 animate-float-slow"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700 }}>
               🎓 2025
             </div>
@@ -342,18 +325,12 @@ export function HeroSection({ theme = "dark" }: { theme?: ThemeMode }) {
       {/* Scroll Indicator */}
       <button
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors cursor-pointer"
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-colors cursor-pointer ${isDark ? "text-white/30 hover:text-white/60" : "text-slate-500 hover:text-slate-800"}`}
       >
         <span className="text-sm" style={{ fontFamily: "'Inter', sans-serif" }}>Scroll</span>
         <ArrowDown size={18} className="animate-bounce" />
       </button>
 
-      <style>{`
-        @keyframes float {
-          from { transform: translateY(0px); }
-          to { transform: translateY(-20px); }
-        }
-      `}</style>
     </section>
   );
 }

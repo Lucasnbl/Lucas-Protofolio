@@ -96,11 +96,11 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
     <section
       id="experience"
       className="py-16 sm:py-24 relative overflow-hidden"
-      style={{ background: isDark ? "#080D1A" : "#edf4ff" }}
+      style={{ background: isDark ? "#080D1A" : "#F9FAFC" }}
     >
-      <div className="absolute top-1/3 right-0 w-80 h-80 rounded-full bg-[#1E3A8A]/5 blur-3xl" />
+      <div className={`absolute top-1/3 right-0 w-80 h-80 rounded-full bg-[#1E3A8A]/5 blur-3xl ${isDark ? "" : "hidden"}`} />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="mb-10 sm:mb-14">
           <div className="flex items-center gap-3 mb-3">
@@ -113,13 +113,14 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
             </span>
           </div>
           <h2
-            className="text-white"
+            className=""
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 700,
               fontSize: "clamp(1.5rem, 4vw, 2.8rem)",
               lineHeight: 1.2,
               letterSpacing: "-0.02em",
+              color: isDark ? "#ffffff" : "#0f172a",
             }}
           >
             Perjalanan &{" "}
@@ -132,9 +133,9 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#1E3A8A]/60 via-white/10 to-transparent" />
+          <div className={`absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#1E3A8A]/60 ${isDark ? "via-white/10" : "via-slate-200"} to-transparent`} />
 
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-5">
             {experiences.map((exp, index) => {
               const isLeft = index % 2 === 0;
               const config = typeConfig[exp.type];
@@ -153,9 +154,11 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
                     }`}
                   >
                     <div
-                      className="group relative rounded-2xl border border-white/8 bg-[#0D1124] p-4 sm:p-5 hover:border-white/15 transition-all duration-300 hover:-translate-y-0.5"
+                      className="group relative rounded-2xl border p-4 sm:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(15,23,42,0.14)]"
                       style={{
                         borderLeft: `2px solid ${exp.color}40`,
+                        borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(148,163,184,0.18)",
+                        background: isDark ? "#0D1124" : "rgba(255,255,255,0.9)",
                       }}
                     >
                       {/* Hover glow left border */}
@@ -180,8 +183,11 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
                           {config.label}
                         </div>
                         <span
-                          className="text-white/30 text-xs whitespace-nowrap"
-                          style={{ fontFamily: "'Inter', sans-serif" }}
+                          className="text-xs whitespace-nowrap"
+                          style={{
+                            fontFamily: "'Inter', sans-serif",
+                            color: isDark ? "rgba(255,255,255,0.3)" : "rgba(15,23,42,0.55)",
+                          }}
                         >
                           {exp.period}
                         </span>
@@ -189,10 +195,11 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
 
                       {/* Title */}
                       <h3
-                        className="text-white mb-1 text-sm sm:text-base"
+                        className="mb-1 text-sm sm:text-base"
                         style={{
                           fontFamily: "'Plus Jakarta Sans', sans-serif",
                           fontWeight: 600,
+                          color: isDark ? "#ffffff" : "#0f172a",
                         }}
                       >
                         {exp.title}
@@ -207,7 +214,7 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
                       >
                         {exp.org}
                         {exp.location && (
-                          <span className="text-white/30 font-normal ml-2">
+                          <span className={`${isDark ? "text-white/30" : "text-slate-500"} font-normal ml-2`}>
                             · {exp.location}
                           </span>
                         )}
@@ -215,8 +222,12 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
 
                       {/* Description */}
                       <p
-                        className="text-white/40 text-xs sm:text-sm mb-3"
-                        style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.65 }}
+                        className="text-xs sm:text-sm mb-3"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          lineHeight: 1.65,
+                          color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15,23,42,0.7)",
+                        }}
                       >
                         {exp.desc}
                       </p>
@@ -227,7 +238,7 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
                           {exp.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 rounded-md bg-white/4 border border-white/6 text-white/35 text-xs"
+                              className={`px-2 py-0.5 rounded-md text-xs ${isDark ? "bg-white/4 border border-white/6 text-white/35" : "bg-slate-100 border border-slate-200 text-slate-600"}`}
                               style={{ fontFamily: "'Inter', sans-serif" }}
                             >
                               {tag}
@@ -241,7 +252,7 @@ export function ExperienceSection({ theme = "dark" }: { theme?: "dark" | "light"
                   {/* Center dot - Desktop */}
                   <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center justify-center">
                     <div
-                      className="w-4 h-4 rounded-full border-2 border-[#0A0F1E] z-10"
+                      className={`w-4 h-4 rounded-full border-2 z-10 ${isDark ? "border-[#0A0F1E]" : "border-[#F9FAFC]"}`}
                       style={{ background: exp.color }}
                     />
                   </div>

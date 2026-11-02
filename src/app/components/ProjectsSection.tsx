@@ -89,11 +89,15 @@ const projects: Record<Tab, Project[]> = {
   docs: [],
 };
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, theme }: { project: Project; theme: "dark" | "light" }) {
+  const isDark = theme === "dark";
   return (
     <div
-      className="group relative rounded-2xl border border-white/8 bg-[#0D1124] overflow-hidden hover:border-white/15 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
-      style={{ boxShadow: "0 0 0 0 transparent" }}
+      className="group relative rounded-2xl border overflow-hidden shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(15,23,42,0.15)]"
+      style={{
+        background: isDark ? "#0D1124" : "rgba(255,255,255,0.94)",
+        borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(148,163,184,0.2)",
+      }}
     >
       {/* Image */}
       <div className="relative h-40 sm:h-44 overflow-hidden">
@@ -102,7 +106,7 @@ function ProjectCard({ project }: { project: Project }) {
           alt={project.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1124] via-[#0D1124]/40 to-transparent" />
+        <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? "from-[#0D1124] via-[#0D1124]/40" : "from-white/50 via-white/10"} to-transparent`} />
 
         {/* Featured badge */}
         {project.featured && (
@@ -122,23 +126,31 @@ function ProjectCard({ project }: { project: Project }) {
       {/* Content */}
       <div className="p-4 sm:p-5">
         <p
-          className="text-white/30 text-xs mb-1"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          className="text-xs mb-1"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            color: isDark ? "rgba(255,255,255,0.3)" : "rgba(15,23,42,0.6)",
+          }}
         >
           {project.subtitle}
         </p>
         <h3
-          className="text-white mb-2 text-sm sm:text-base"
+          className="mb-2 text-sm sm:text-base"
           style={{
             fontFamily: "'Plus Jakarta Sans', sans-serif",
             fontWeight: 600,
+            color: isDark ? "#ffffff" : "#0f172a",
           }}
         >
           {project.title}
         </h3>
         <p
-          className="text-white/45 text-xs sm:text-sm mb-4 line-clamp-2"
-          style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.65 }}
+          className="text-xs sm:text-sm mb-4 line-clamp-2"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            lineHeight: 1.65,
+            color: isDark ? "rgba(255,255,255,0.45)" : "rgba(15,23,42,0.72)",
+          }}
         >
           {project.desc}
         </p>
@@ -148,8 +160,13 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 rounded-md bg-white/5 border border-white/8 text-white/40 text-xs"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              className="px-2 py-0.5 rounded-md text-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                background: isDark ? "rgba(255,255,255,0.05)" : "rgba(148,163,184,0.08)",
+                border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(148,163,184,0.18)",
+                color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15,23,42,0.7)",
+              }}
             >
               {tag}
             </span>
@@ -163,7 +180,7 @@ function ProjectCard({ project }: { project: Project }) {
               <a
                 key={link.label}
                 href={link.url}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm cursor-pointer"
                 style={{
                   fontFamily: "'Inter', sans-serif",
                   fontWeight: 500,
@@ -210,11 +227,11 @@ export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }
     <section
       id="projects"
       className="py-16 sm:py-24 relative overflow-hidden"
-      style={{ background: isDark ? "#0A0F1E" : "#f5f7ff" }}
+      style={{ background: isDark ? "#0A0F1E" : "#F9FAFC" }}
     >
       <div className="absolute bottom-0 left-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#F97316]/5 blur-3xl" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="mb-8 sm:mb-10">
           <div className="flex items-center gap-3 mb-3">
@@ -228,7 +245,7 @@ export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }
           </div>
           <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-end gap-2 sm:gap-4">
             <h2
-              className="text-white"
+              className={isDark ? "text-white" : "text-slate-900"}
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 700,
@@ -243,8 +260,11 @@ export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }
               </span>
             </h2>
             <p
-              className="text-white/40 text-sm"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              className="text-sm"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15,23,42,0.65)",
+              }}
             >
               {projects[activeTab].length} projects
             </p>
@@ -252,7 +272,13 @@ export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }
         </div>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8 p-1 rounded-xl bg-white/3 border border-white/5 w-fit overflow-x-auto">
+        <div
+          className="flex flex-wrap gap-2 mb-8 p-1 rounded-xl w-fit overflow-x-auto"
+          style={{
+            background: isDark ? "rgba(255,255,255,0.03)" : "rgba(148,163,184,0.08)",
+            border: isDark ? "1px solid rgba(255,255,255,0.05)" : "1px solid rgba(148,163,184,0.15)",
+          }}
+        >
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -260,7 +286,7 @@ export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }
               className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
                   ? "bg-[#1E3A8A] text-white shadow-lg shadow-[#1E3A8A]/30"
-                  : "text-white/40 hover:text-white/60 hover:bg-white/5"
+                  : isDark ? "text-white/40 hover:text-white/60 hover:bg-white/5" : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
               }`}
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: activeTab === tab.id ? 500 : 400 }}
             >
@@ -274,15 +300,20 @@ export function ProjectsSection({ theme = "dark" }: { theme?: "dark" | "light" }
         {/* Project Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {projects[activeTab].map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project.id} project={project} theme={theme} />
           ))}
         </div>
 
         {/* View All CTA */}
         <div className="flex justify-center mt-8 sm:mt-10">
           <button
-            className="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-white/50 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all text-sm cursor-pointer group"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            className="flex items-center gap-2 px-6 py-3 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-sm cursor-pointer group"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(148,163,184,0.25)",
+              color: isDark ? "rgba(255,255,255,0.5)" : "rgba(15,23,42,0.7)",
+              background: isDark ? "transparent" : "rgba(255,255,255,0.5)",
+            }}
           >
             Lihat Semua Project
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
